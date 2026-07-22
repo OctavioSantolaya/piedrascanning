@@ -1,0 +1,165 @@
+---
+interface Props {
+  whatsappUrl?: string;
+}
+
+const {
+  whatsappUrl = "https://wa.me/5491121850895"
+} = Astro.props;
+---
+
+<section id="contacto" class="contact-section">
+  <div class="contact-container">
+    <!-- Left Column: CTA & WhatsApp -->
+    <div class="contact-left">
+      <h2 class="contact-title">Ponete en contacto.</h2>
+      <p class="contact-subtitle">Dejanos un mensaje y nos vamos a comunicar con vos.</p>
+      
+      <a 
+        href={whatsappUrl} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="btn-whatsapp"
+      >
+        Escribir al WhatsApp
+      </a>
+    </div>
+
+    <!-- Right Column: Info & Hours -->
+    <div class="contact-right">
+      <div class="info-block">
+        <h3 class="info-heading">Horarios de apertura</h3>
+        <p class="info-text">Lunes a viernes de 8hs a 17hs</p>
+        <p class="info-text">Sabados de 8hs a 13hs</p>
+      </div>
+
+      <div class="info-block">
+        <h3 class="info-heading">Teléfono</h3>
+        <p class="info-text">
+          <a href="tel:+5491121850895" class="phone-link">+54 9 1121850895</a>
+        </p>
+        <p class="info-text">
+          <a href="tel:1127270766" class="phone-link">11-27270766</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 90px 0;
+  }
+
+  .contact-container {
+    max-width: var(--max-width, 1280px);
+    margin: 0 auto;
+    padding: 0 28px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  /* Left Column */
+  .contact-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contact-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.4rem, 4.5vw, 3.2rem);
+    font-weight: 700;
+    color: #111111;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+
+  .contact-subtitle {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: #444444;
+    margin-top: 12px;
+    margin-bottom: 28px;
+    line-height: 1.4;
+  }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary, #a02a27);
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 12px 32px;
+    border-radius: 50px;
+    letter-spacing: 0.01em;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(160, 42, 39, 0.25);
+  }
+
+  .btn-whatsapp:hover {
+    background-color: var(--color-primary-dark, #801e1c);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(160, 42, 39, 0.35);
+  }
+
+  /* Right Column */
+  .contact-right {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .info-heading {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.01em;
+  }
+
+  .info-text {
+    font-family: var(--font-sans);
+    font-size: 0.98rem;
+    font-weight: 400;
+    color: #444444;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .phone-link {
+    color: #444444;
+    transition: color 0.2s ease;
+  }
+
+  .phone-link:hover {
+    color: var(--color-primary, #a02a27);
+  }
+
+  @media (max-width: 868px) {
+    .contact-section {
+      padding: 60px 0;
+    }
+
+    .contact-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>
