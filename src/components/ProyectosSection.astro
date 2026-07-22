@@ -1,0 +1,167 @@
+---
+interface ProyectoItem {
+  id: string;
+  title: string;
+  description?: string;
+  image: string;
+  alt: string;
+}
+
+const proyectos: ProyectoItem[] = [
+  {
+    id: "proyecto-1",
+    title: "Instalación de pórfido",
+    description: "",
+    image: "/images/proyectos/proyecto-1.jpg",
+    alt: "Instalación de pórfido en espacio exterior"
+  },
+  {
+    id: "proyecto-2",
+    title: "Pórfido mixto largo libre",
+    description: "Colocación de pórfido mixto largo libre en una entrada.",
+    image: "/images/proyectos/proyecto-2.png",
+    alt: "Colocación de pórfido mixto en entrada"
+  },
+  {
+    id: "proyecto-3",
+    title: "Instalación de pórfido mixto",
+    description: "Instalación de pórfido mixto en entrada de locales.",
+    image: "/images/proyectos/proyecto-3.png",
+    alt: "Instalación de pórfido mixto en locales comercial"
+  }
+];
+---
+
+<section id="proyectos" class="proyectos-section">
+  <div class="proyectos-container">
+    <h2 class="section-title">Obras y proyectos</h2>
+    
+    <div class="proyectos-grid">
+      {proyectos.map((proyecto) => (
+        <article class="proyecto-card">
+          <div class="image-wrapper">
+            <img 
+              src={proyecto.image} 
+              alt={proyecto.alt} 
+              class="proyecto-img" 
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="card-content">
+            <h3 class="proyecto-title">{proyecto.title}</h3>
+            {proyecto.description && (
+              <p class="proyecto-description">{proyecto.description}</p>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .proyectos-section {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 80px 0;
+  }
+
+  .proyectos-container {
+    max-width: var(--max-width, 1280px);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    color: #111111;
+    text-align: center;
+    margin-bottom: 54px;
+    letter-spacing: -0.01em;
+  }
+
+  .proyectos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .proyecto-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    transition: transform 0.3s ease;
+  }
+
+  .proyecto-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .image-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: #f4f4f4;
+  }
+
+  .proyecto-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .proyecto-card:hover .proyecto-img {
+    transform: scale(1.03);
+  }
+
+  .card-content {
+    padding-top: 18px;
+  }
+
+  .proyecto-title {
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #111111;
+    line-height: 1.3;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .proyecto-description {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #555555;
+    line-height: 1.5;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 992px) {
+    .proyectos-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .proyectos-section {
+      padding: 50px 0;
+    }
+
+    .section-title {
+      margin-bottom: 36px;
+    }
+
+    .proyectos-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+</style>
