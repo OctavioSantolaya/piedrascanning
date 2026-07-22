@@ -1,109 +1,43 @@
 ---
 interface Props {
   className?: string;
-  showText?: boolean;
+  height?: number;
 }
 
-const { className = "", showText = true } = Astro.props;
+const { className = "", height = 48 } = Astro.props;
 ---
 
-<div class={`logo-container ${className}`}>
-  <!-- PC Symbol SVG -->
-  <svg class="logo-symbol" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <!-- Gradients for realistic 3D PC Emblem -->
-      <linearGradient id="redGradient" x1="15%" y1="10%" x2="85%" y2="90%">
-        <stop offset="0%" stop-color="#c93834" />
-        <stop offset="50%" stop-color="#a02a27" />
-        <stop offset="100%" stop-color="#671412" />
-      </linearGradient>
-      
-      <linearGradient id="darkGradient" x1="10%" y1="20%" x2="90%" y2="80%">
-        <stop offset="0%" stop-color="#3a3a3a" />
-        <stop offset="60%" stop-color="#1c1c1c" />
-        <stop offset="100%" stop-color="#0a0a0a" />
-      </linearGradient>
-      
-      <filter id="subtleShadow" x="-10%" y="-10%" width="130%" height="130%">
-        <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.25"/>
-      </filter>
-    </defs>
-
-    <!-- Outer Thin Ring -->
-    <circle cx="60" cy="60" r="56" stroke="#222222" stroke-width="1.8" fill="none" opacity="0.85" />
-
-    <!-- Interlocking "PC" Stylized Monogram -->
-    <g filter="url(#subtleShadow)">
-      <!-- Back "C" Monogram Shadow & Outer Loop -->
-      <path 
-        d="M 68 30 C 42 26 28 42 28 62 C 28 82 44 94 70 90 C 78 88 84 84 88 78 L 74 68 C 72 72 68 76 60 76 C 46 76 42 66 42 58 C 42 48 50 40 64 40 C 72 40 76 44 78 46 L 88 34 C 82 30 76 28 68 30 Z" 
-        fill="url(#darkGradient)" 
-      />
-      
-      <!-- Front "P" Monogram -->
-      <path 
-        d="M 36 26 L 64 26 C 80 26 92 34 92 48 C 92 62 80 70 64 70 L 52 70 L 52 94 L 36 94 Z M 52 40 L 52 56 L 62 56 C 70 56 76 52 76 48 C 76 44 70 40 62 40 Z" 
-        fill="url(#redGradient)" 
-      />
-    </g>
-  </svg>
-
-  {showText && (
-    <div class="logo-text">
-      <span class="text-brand-dark">PIEDRAS</span>
-      <span class="text-brand-red">CANNING</span>
-    </div>
-  )}
+<div class={`logo-wrapper ${className}`}>
+  <img 
+    src="/images/logo.png" 
+    alt="Piedras Canning - Logo" 
+    class="logo-img"
+    style={`height: ${height}px;`}
+    loading="eager"
+    decoding="async"
+  />
 </div>
 
 <style>
-  .logo-container {
+  .logo-wrapper {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
     user-select: none;
-    text-decoration: none;
   }
 
-  .logo-symbol {
-    width: 52px;
-    height: 52px;
-    flex-shrink: 0;
-    transition: transform 0.3s ease;
+  .logo-img {
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.25s ease;
   }
 
-  .logo-container:hover .logo-symbol {
-    transform: scale(1.04);
-  }
-
-  .logo-text {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-sans);
-    font-size: 1.45rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    line-height: 1;
-    white-space: nowrap;
-  }
-
-  .text-brand-dark {
-    color: #1a1a1a;
-  }
-
-  .text-brand-red {
-    color: var(--color-primary, #a02a27);
+  .logo-wrapper:hover .logo-img {
+    transform: scale(1.03);
   }
 
   @media (max-width: 640px) {
-    .logo-symbol {
-      width: 44px;
-      height: 44px;
-    }
-    .logo-text {
-      font-size: 1.2rem;
-      gap: 4px;
+    .logo-img {
+      height: 38px !important;
     }
   }
 </style>
