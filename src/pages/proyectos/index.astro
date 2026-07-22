@@ -1,0 +1,217 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allProyectos = await getCollection('proyectos');
+
+// Sort by order ascending
+const proyectos = allProyectos.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+---
+
+<Layout 
+  title="Proyectos | Piedras Canning" 
+  description="Mira todos los proyectos y obras en los que trabajamos en nuestros años brindando servicio de venta y colocación de piedras naturales."
+>
+  <div class="proyectos-page">
+    <div class="proyectos-container">
+      <h1 class="page-title">Proyectos</h1>
+
+      <div class="proyectos-grid">
+        {proyectos.map((item) => (
+          <article class="proyecto-card">
+            <a href={`/proyectos/${item.id}`} class="card-image-link">
+              <div class="image-wrapper">
+                <img 
+                  src={item.data.featuredImage} 
+                  alt={item.data.title} 
+                  class="proyecto-img" 
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </a>
+
+            <div class="card-content">
+              <h2 class="proyecto-title">
+                <a href={`/proyectos/${item.id}`} class="title-link">
+                  {item.data.title}
+                </a>
+              </h2>
+
+              {item.data.description && (
+                <p class="proyecto-description">{item.data.description}</p>
+              )}
+
+              <div class="card-action">
+                <a href={`/proyectos/${item.id}`} class="btn-read-more">
+                  LEER MÁS <span class="arrow">➔</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .proyectos-page {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 60px 0 100px 0;
+  }
+
+  .proyectos-container {
+    max-width: var(--max-width, 1280px);
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .page-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 48px 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* Grid Layout */
+  .proyectos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px 36px;
+  }
+
+  /* Card */
+  .proyecto-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    transition: transform 0.3s ease;
+  }
+
+  .card-image-link {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .image-wrapper {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: #f4f4f4;
+  }
+
+  .proyecto-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .proyecto-card:hover .proyecto-img {
+    transform: scale(1.04);
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-top: 20px;
+  }
+
+  .proyecto-title {
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.01em;
+  }
+
+  .title-link {
+    color: #111111;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .title-link:hover {
+    color: var(--color-primary, #a02a27);
+  }
+
+  .proyecto-description {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #555555;
+    line-height: 1.55;
+    margin: 0 0 18px 0;
+    flex: 1;
+  }
+
+  .card-action {
+    margin-top: auto;
+  }
+
+  .btn-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #111111;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .arrow {
+    font-size: 0.9rem;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-read-more:hover {
+    color: var(--color-primary, #a02a27);
+  }
+
+  .btn-read-more:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .proyectos-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 36px 24px;
+    }
+
+    .proyectos-container {
+      padding: 0 28px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .proyectos-page {
+      padding: 40px 0 60px 0;
+    }
+
+    .page-title {
+      margin-bottom: 32px;
+    }
+
+    .proyectos-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .proyectos-container {
+      padding: 0 20px;
+    }
+  }
+</style>

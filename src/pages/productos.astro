@@ -1,0 +1,1050 @@
+---
+import Layout from '../layouts/Layout.astro';
+import productsData from '../data/products.json';
+
+interface ProductItem {
+  id: string;
+  name: string;
+  image: string;
+  thumb: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  description: string;
+  items: ProductItem[];
+}
+
+const categories = productsData as Category[];
+
+const fileButtons = [
+  {
+    title: 'Descubrí nuestra piedra "PLOTON"',
+    url: "/files/PIEDRAS-CANNING-PLOTON.pdf"
+  },
+  {
+    title: "Descargar PDF de productos",
+    url: "/files/Catalogo-Piedras-Canning-2026.pdf"
+  }
+];
+---
+
+<Layout 
+  title="Productos | Piedras Canning" 
+  description="Descubrí todos los productos de piedras naturales, lajas, muretes, pórfidos, atérmicos y materiales que tenemos en Piedras Canning."
+>
+  <div class="productos-page">
+    <!-- Header Hero Section (Fondo Blanco) -->
+    <section class="hero-section">
+      <div class="hero-container">
+        <h1 class="hero-title">Nuestros Productos</h1>
+        <p class="hero-subtitle">
+          Encontrá el estilo ideal para tu proyecto entre nuestra amplia variedad de piedras naturales, revestimientos artesanales y materiales de primera calidad.
+        </p>
+
+        <!-- Top Action Buttons (Solo texto, sin íconos) -->
+        <div class="action-buttons-group">
+          <a 
+            href={fileButtons[0].url} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="action-btn btn-primary"
+          >
+            <span>{fileButtons[0].title}</span>
+          </a>
+
+          <a 
+            href={fileButtons[1].url} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="action-btn btn-dark"
+          >
+            <span>{fileButtons[1].title}</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & Navigation Sticky Bar (Buscador al lado de categorías con flecha de despliegue) -->
+    <div class="sticky-nav-bar" id="sticky-filter-bar">
+      <div class="filter-container">
+        <!-- Search Input -->
+        <div class="search-box">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input 
+            type="text" 
+            id="product-search" 
+            placeholder="Buscar piedra..." 
+            aria-label="Buscar productos"
+          />
+          <button id="clear-search" class="clear-btn" aria-label="Limpiar búsqueda" style="display: none;">&times;</button>
+        </div>
+
+        <!-- Categories Wrapper with Toggle Arrow Button -->
+        <div class="categories-wrapper" id="categories-wrapper">
+          <div class="category-pills" id="category-pills">
+            {categories.map((cat, idx) => (
+              <a href={`#${cat.id}`} class={`pill-btn ${idx === 0 ? 'active' : ''}`} data-category={cat.id}>
+                {cat.name} ({cat.items.length})
+              </a>
+            ))}
+          </div>
+
+          <!-- Down arrow toggle button -->
+          <button class="expand-btn" id="expand-categories-btn" aria-label="Desplegar más categorías" aria-expanded="false">
+            <svg class="arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Catalog Grid -->
+    <main class="catalog-main">
+      <div class="catalog-container">
+        {categories.map((cat) => (
+          <section class="category-section" id={cat.id} data-cat-id={cat.id}>
+            <div class="category-header">
+              <h2 class="category-title">{cat.name}</h2>
+              <p class="category-description">{cat.description}</p>
+            </div>
+
+            <div class="products-grid">
+              {cat.items.map((product) => (
+                <article class="product-card" data-name={product.name.toLowerCase()} data-cat={cat.id}>
+                  <div class="card-media">
+                    <img 
+                      src={product.thumb || product.image} 
+                      alt={product.name} 
+                      loading="lazy" 
+                      decoding="async"
+                      class="product-img"
+                      data-fullsrc={product.image}
+                      data-title={product.name}
+                      data-catname={cat.name}
+                    />
+                    <div class="card-overlay">
+                      <button class="zoom-btn" data-fullsrc={product.image} data-title={product.name} data-catname={cat.name} aria-label="Ampliar imagen">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                          <line x1="11" y1="8" x2="11" y2="14"></line>
+                          <line x1="8" y1="11" x2="14" y2="11"></line>
+                        </svg>
+                        Ampliar
+                      </button>
+                      <a 
+                        href={`https://wa.me/5491121850895?text=${encodeURIComponent(`Hola Piedras Canning! Quisiera consultar sobre el producto: ${product.name} (${cat.name})`)}`}
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="overlay-consult-link"
+                      >
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+                        </svg>
+                        Consultar
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <h3 class="product-name">{product.name}</h3>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
+
+        <div id="no-results" class="no-results" style="display: none;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <h3>No se encontraron productos</h3>
+          <p>Prueba buscando otro término o limpia el buscador para ver todas las categorías.</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Lightbox Modal for Image Zoom & Navigation -->
+    <div class="lightbox-modal" id="lightbox-modal" aria-hidden="true">
+      <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+      <div class="lightbox-content">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar ventana">&times;</button>
+        
+        <button class="lightbox-nav-btn lightbox-prev" id="lightbox-prev" aria-label="Producto anterior">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="lightbox-media-wrap" id="lightbox-media-wrap">
+          <img id="lightbox-img" src="" alt="Vista ampliada del producto" />
+          <div class="lightbox-caption" id="lightbox-caption"></div>
+          <a id="lightbox-wa-link" href="#" target="_blank" rel="noopener noreferrer" class="lightbox-wa-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+            </svg>
+            Consultar por WhatsApp
+          </a>
+        </div>
+
+        <button class="lightbox-nav-btn lightbox-next" id="lightbox-next" aria-label="Siguiente producto">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Dynamic Sticky Filter Bar Position Calculation
+  const siteHeader = document.querySelector('.site-header');
+  const stickyFilterBar = document.getElementById('sticky-filter-bar');
+
+  function updateStickyBarPosition() {
+    if (siteHeader && stickyFilterBar) {
+      const headerHeight = siteHeader.getBoundingClientRect().height;
+      stickyFilterBar.style.top = `${headerHeight}px`;
+    }
+  }
+
+  updateStickyBarPosition();
+  window.addEventListener('resize', updateStickyBarPosition);
+  window.addEventListener('scroll', updateStickyBarPosition);
+
+  // Search and Filter Logic
+  const searchInput = document.getElementById('product-search') as HTMLInputElement | null;
+  const clearBtn = document.getElementById('clear-search') as HTMLButtonElement | null;
+  const productCards = document.querySelectorAll('.product-card');
+  const categorySections = document.querySelectorAll('.category-section');
+  const noResults = document.getElementById('no-results');
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const query = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      if (clearBtn) clearBtn.style.display = query ? 'block' : 'none';
+
+      let visibleCount = 0;
+
+      productCards.forEach((card) => {
+        const name = (card as HTMLElement).dataset.name || '';
+        const matches = name.includes(query);
+        (card as HTMLElement).style.display = matches ? 'flex' : 'none';
+        if (matches) visibleCount++;
+      });
+
+      // Show/hide category sections based on visible cards
+      categorySections.forEach((sec) => {
+        const visibleCardsInCat = sec.querySelectorAll('.product-card[style="display: flex;"]');
+        (sec as HTMLElement).style.display = (query === '' || visibleCardsInCat.length > 0) ? 'block' : 'none';
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 && query !== '' ? 'block' : 'none';
+      }
+    });
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+        searchInput.focus();
+      });
+    }
+  }
+
+  // Expand Categories Toggle Button Logic
+  const categoriesWrapper = document.getElementById('categories-wrapper');
+  const expandBtn = document.getElementById('expand-categories-btn');
+
+  if (categoriesWrapper && expandBtn) {
+    expandBtn.addEventListener('click', () => {
+      const isExpanded = categoriesWrapper.classList.toggle('is-expanded');
+      expandBtn.setAttribute('aria-expanded', isExpanded.toString());
+    });
+  }
+
+  // ScrollSpy Active Category Pill Highlighting
+  const pillBtns = document.querySelectorAll('.pill-btn');
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '-180px 0px -40% 0px',
+    threshold: 0.05
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const activeCatId = entry.target.id;
+        pillBtns.forEach((btn) => {
+          const btnCat = (btn as HTMLElement).dataset.category;
+          if (btnCat === activeCatId) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  categorySections.forEach((sec) => observer.observe(sec));
+
+  // Lightbox Carousel Logic
+  interface GalleryItem {
+    fullsrc: string;
+    title: string;
+    catname: string;
+  }
+
+  const lightbox = document.getElementById('lightbox-modal');
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+  const lightboxCap = document.getElementById('lightbox-caption');
+  const lightboxWaLink = document.getElementById('lightbox-wa-link') as HTMLAnchorElement | null;
+  const lightboxClose = document.getElementById('lightbox-close');
+  const lightboxBackdrop = document.getElementById('lightbox-backdrop');
+  const lightboxPrev = document.getElementById('lightbox-prev');
+  const lightboxNext = document.getElementById('lightbox-next');
+  const lightboxMediaWrap = document.getElementById('lightbox-media-wrap');
+
+  let activeGallery: GalleryItem[] = [];
+  let currentIndex = 0;
+
+  function updateGalleryItems() {
+    activeGallery = [];
+    document.querySelectorAll('.product-card').forEach((card) => {
+      if ((card as HTMLElement).style.display !== 'none') {
+        const img = card.querySelector('.product-img') as HTMLImageElement | null;
+        if (img) {
+          activeGallery.push({
+            fullsrc: img.dataset.fullsrc || img.src,
+            title: img.dataset.title || card.querySelector('.product-name')?.textContent || '',
+            catname: img.dataset.catname || ''
+          });
+        }
+      }
+    });
+  }
+
+  function showLightboxIndex(index: number) {
+    if (activeGallery.length === 0) return;
+    if (index < 0) index = activeGallery.length - 1;
+    if (index >= activeGallery.length) index = 0;
+    currentIndex = index;
+
+    const item = activeGallery[currentIndex];
+    if (lightboxImg && lightboxCap && lightboxWaLink) {
+      lightboxImg.src = item.fullsrc;
+      lightboxCap.textContent = item.title;
+      const msg = `Hola Piedras Canning! Quisiera consultar sobre el producto: ${item.title}${item.catname ? ` (${item.catname})` : ''}`;
+      lightboxWaLink.href = `https://wa.me/5491121850895?text=${encodeURIComponent(msg)}`;
+    }
+  }
+
+  function openLightbox(fullsrc: string, title: string, catname: string) {
+    updateGalleryItems();
+    const foundIdx = activeGallery.findIndex(i => i.fullsrc === fullsrc || i.title === title);
+    currentIndex = foundIdx !== -1 ? foundIdx : 0;
+
+    showLightboxIndex(currentIndex);
+
+    if (lightbox) {
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeLightbox() {
+    if (lightbox) {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  }
+
+  document.querySelectorAll('.zoom-btn, .product-img').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const target = el as HTMLElement;
+      const fullsrc = target.dataset.fullsrc || (target as HTMLImageElement).src;
+      const title = target.dataset.title || '';
+      const catname = target.dataset.catname || '';
+      if (fullsrc) openLightbox(fullsrc, title, catname);
+    });
+  });
+
+  if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+  if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightbox);
+
+  if (lightboxPrev) {
+    lightboxPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showLightboxIndex(currentIndex - 1);
+    });
+  }
+
+  if (lightboxNext) {
+    lightboxNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showLightboxIndex(currentIndex + 1);
+    });
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox || !lightbox.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') showLightboxIndex(currentIndex - 1);
+    if (e.key === 'ArrowRight') showLightboxIndex(currentIndex + 1);
+  });
+
+  // Touch Swipe Gesture for Mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  if (lightboxMediaWrap) {
+    lightboxMediaWrap.addEventListener('touchstart', (e: TouchEvent) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightboxMediaWrap.addEventListener('touchend', (e: TouchEvent) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diffX = touchEndX - touchStartX;
+      if (Math.abs(diffX) > 40) {
+        if (diffX < 0) {
+          showLightboxIndex(currentIndex + 1);
+        } else {
+          showLightboxIndex(currentIndex - 1);
+        }
+      }
+    }, { passive: true });
+  }
+</script>
+
+<style>
+  .productos-page {
+    width: 100%;
+    background-color: #fcfcfc;
+    min-height: 100vh;
+  }
+
+  /* Hero Section (Fondo Blanco) */
+  .hero-section {
+    position: relative;
+    background-color: #ffffff;
+    color: #1f1f24;
+    padding: 70px 24px 50px 24px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f2;
+  }
+
+  .hero-container {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background-color: rgba(160, 42, 39, 0.08);
+    color: var(--color-primary, #a02a27);
+    border: 1px solid rgba(160, 42, 39, 0.2);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+  }
+
+  .hero-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.4rem, 5vw, 3.5rem);
+    font-weight: 800;
+    color: #111111;
+    margin: 0;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-sans);
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    font-weight: 400;
+    color: #55555e;
+    max-width: 780px;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Top Action Buttons (Solo texto, sin íconos) */
+  .action-buttons-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 14px;
+  }
+
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 26px;
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary, #a02a27);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(160, 42, 39, 0.25);
+  }
+
+  .btn-primary:hover {
+    background-color: #b8322f;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(160, 42, 39, 0.35);
+  }
+
+  .btn-dark {
+    background-color: #111111;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  }
+
+  .btn-dark:hover {
+    background-color: #2a2a2a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Sticky Navigation Bar (Posición dinámica con JS) */
+  .sticky-nav-bar {
+    position: sticky;
+    top: 124px;
+    z-index: 900;
+    background-color: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #eef0f2;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    padding: 14px 24px;
+  }
+
+  .filter-container {
+    max-width: var(--max-width, 1280px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* Search Box (Izquierda) */
+  .search-box {
+    position: relative;
+    width: 280px;
+    flex-shrink: 0;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888888;
+    pointer-events: none;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 9px 36px 9px 38px;
+    font-size: 0.92rem;
+    border: 1px solid #e2e4e8;
+    border-radius: 20px;
+    background-color: #f8f9fa;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+
+  .search-box input:focus {
+    border-color: var(--color-primary, #a02a27);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(160, 42, 39, 0.12);
+  }
+
+  .clear-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #888888;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  /* Categories Wrapper (Derecha con flecha) */
+  .categories-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    max-height: 42px;
+  }
+
+  .categories-wrapper.is-expanded {
+    max-height: 250px;
+    overflow: visible;
+  }
+
+  .category-pills {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    overflow: hidden;
+    height: 40px;
+    transition: height 0.3s ease;
+  }
+
+  .categories-wrapper.is-expanded .category-pills {
+    height: auto;
+    overflow: visible;
+  }
+
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: #4a4a4a;
+    background-color: #f0f2f5;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    border: 1px solid transparent;
+  }
+
+  .pill-btn:hover {
+    background-color: #e4e7eb;
+    color: var(--color-primary, #a02a27);
+  }
+
+  /* Categoría Activa en Rojo */
+  .pill-btn.active {
+    background-color: var(--color-primary, #a02a27);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(160, 42, 39, 0.25);
+  }
+
+  /* Expand Arrow Button */
+  .expand-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    background-color: #f0f2f5;
+    color: #4a4a4a;
+    border: 1px solid #e2e4e8;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .expand-btn:hover {
+    background-color: #e4e7eb;
+    color: var(--color-primary, #a02a27);
+    border-color: #d0d4dc;
+  }
+
+  .arrow-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .categories-wrapper.is-expanded .arrow-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Catalog Main Layout */
+  .catalog-main {
+    padding: 60px 24px 100px 24px;
+  }
+
+  .catalog-container {
+    max-width: var(--max-width, 1280px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+
+  /* Category Section */
+  .category-section {
+    scroll-margin-top: 200px;
+  }
+
+  .category-header {
+    margin-bottom: 32px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 16px;
+  }
+
+  .category-title {
+    font-family: var(--font-sans);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .category-description {
+    font-size: 0.98rem;
+    color: #666666;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* Grid of Product Cards (Sin Fondo, Sin Borde) */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 32px;
+  }
+
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+    box-shadow: none;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: none;
+    border: none;
+  }
+
+  .card-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.4s ease;
+  }
+
+  .product-card:hover .product-img {
+    transform: scale(1.04);
+  }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    opacity: 0;
+    border-radius: 12px;
+    transition: opacity 0.25s ease;
+  }
+
+  .product-card:hover .card-overlay {
+    opacity: 1;
+  }
+
+  .zoom-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+  }
+
+  .zoom-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .overlay-consult-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #25d366;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+  }
+
+  .overlay-consult-link:hover {
+    transform: scale(1.05);
+  }
+
+  .card-body {
+    padding: 14px 4px 4px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .product-name {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+    text-align: center;
+    line-height: 1.35;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666666;
+  }
+
+  .no-results h3 {
+    margin-top: 16px;
+    font-size: 1.3rem;
+    color: #333;
+  }
+
+  /* Lightbox Modal Carousel */
+  .lightbox-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .lightbox-modal.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(8px);
+  }
+
+  .lightbox-content {
+    position: relative;
+    z-index: 2001;
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .lightbox-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .lightbox-nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.08);
+  }
+
+  .lightbox-media-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 780px;
+    width: 100%;
+    touch-action: pan-y;
+  }
+
+  .lightbox-media-wrap img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  }
+
+  .lightbox-caption {
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .lightbox-wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #25d366;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 9px 22px;
+    border-radius: 20px;
+    text-decoration: none;
+    margin-top: 14px;
+    box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .lightbox-wa-btn:hover {
+    background-color: #1fbe5a;
+    transform: translateY(-2px);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -45px;
+    right: 0;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 2.4rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+  }
+
+  .lightbox-close:hover {
+    opacity: 1;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 900px) {
+    .filter-container {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 50px 20px 40px 20px;
+    }
+
+    .action-buttons-group {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .action-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .sticky-nav-bar {
+      padding: 12px 16px;
+    }
+
+    .products-grid {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+    }
+
+    .card-body {
+      padding: 10px 0 0 0;
+    }
+
+    .product-name {
+      font-size: 0.94rem;
+    }
+
+    .lightbox-nav-btn {
+      width: 38px;
+      height: 38px;
+    }
+
+    .lightbox-nav-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+</style>

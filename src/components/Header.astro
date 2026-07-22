@@ -10,21 +10,24 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: 'La empresa', href: '/la-empresa' },
-  { label: 'El proceso', href: '#el-proceso' },
-  { label: 'Proyectos', href: '#proyectos' },
+  { label: 'El proceso', href: '/el-proceso' },
+  { label: 'Proyectos', href: '/proyectos' },
   { 
     label: 'Productos', 
-    href: '#productos',
+    href: '/productos',
     hasDropdown: true,
     children: [
-      { label: 'Pórfidos', href: '#porfidos' },
-      { label: 'Lajas', href: '#lajas' },
-      { label: 'Muretes', href: '#muretes' },
-      { label: 'Atérmicos', href: '#atermicos' },
-      { label: 'Venecitas', href: '#venecitas' },
-      { label: 'Revestimientos', href: '#revestimientos' },
-      { label: 'Pisos', href: '#pisos' },
-      { label: 'Materiales', href: '#materiales' }
+      { label: 'Muretes', href: '/productos#muretes' },
+      { label: 'Lajas', href: '/productos#lajas' },
+      { label: 'Voladuras', href: '/productos#voladuras' },
+      { label: 'Pórfidos', href: '/productos#porfidos' },
+      { label: 'Baldosas de Hormigón', href: '/productos#baldozas-de-hormigon' },
+      { label: 'Piedras de Jardín', href: '/productos#piedras-de-jardin' },
+      { label: 'Atérmicos', href: '/productos#atermicos' },
+      { label: 'Piedras de Brasil', href: '/productos#piedras-de-brasil' },
+      { label: 'Refractarios', href: '/productos#refractarios' },
+      { label: 'Selladores y Pegamentos', href: '/productos#pegamentos' },
+      { label: 'Materiales', href: '/productos#materiales' }
     ]
   }
 ];
@@ -103,12 +106,26 @@ const currentPath = Astro.url.pathname;
     <nav class="mobile-nav">
       <ul class="mobile-nav-list">
         {navItems.map((item) => (
-          <li class="mobile-nav-item">
-            <a href={item.href} class="mobile-nav-link">
-              {item.label}
-            </a>
+          <li class={`mobile-nav-item ${item.hasDropdown ? 'mobile-has-dropdown' : ''}`}>
+            <div class="mobile-nav-row">
+              <a href={item.href} class="mobile-nav-link">
+                {item.label}
+              </a>
+              {item.hasDropdown && (
+                <button class="mobile-dropdown-toggle" aria-label="Expandir submenú" aria-expanded="false" type="button">
+                  <svg class="mobile-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+              )}
+            </div>
             {item.hasDropdown && item.children && (
               <ul class="mobile-sub-list">
+                <li>
+                  <a href={item.href} class="mobile-sub-link mobile-sub-link-all">
+                    Ver todos los Productos
+                  </a>
+                </li>
                 {item.children.map((child) => (
                   <li>
                     <a href={child.href} class="mobile-sub-link">
@@ -145,18 +162,50 @@ const currentPath = Astro.url.pathname;
   if (mobileToggle && mobileDrawer) {
     mobileToggle.addEventListener('click', () => {
       const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
-      mobileToggle.setAttribute('aria-expanded', (!isExpanded).toString());
-      mobileToggle.classList.toggle('is-active');
-      mobileDrawer.classList.toggle('is-open');
+      const willBeExpanded = !isExpanded;
+      mobileToggle.setAttribute('aria-expanded', willBeExpanded.toString());
+      mobileToggle.classList.toggle('is-active', willBeExpanded);
+      mobileDrawer.classList.toggle('is-open', willBeExpanded);
+      document.body.style.overflow = willBeExpanded ? 'hidden' : '';
+    });
+
+    // Accordion submenu toggle
+    const dropdownItems = mobileDrawer.querySelectorAll('.mobile-has-dropdown');
+    dropdownItems.forEach(item => {
+      const link = item.querySelector('.mobile-nav-link');
+      const toggleBtn = item.querySelector('.mobile-dropdown-toggle');
+      
+      const toggleDropdown = (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isExpanded = item.classList.contains('is-expanded');
+        
+        item.classList.toggle('is-expanded', !isExpanded);
+        if (toggleBtn) {
+          toggleBtn.setAttribute('aria-expanded', (!isExpanded).toString());
+        }
+      };
+
+      if (link) {
+        link.addEventListener('click', toggleDropdown);
+      }
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', toggleDropdown);
+      }
     });
 
     // Close mobile drawer when clicking a link
     const mobileLinks = mobileDrawer.querySelectorAll('a');
     mobileLinks.forEach(link => {
       link.addEventListener('click', () => {
+        // Do not close drawer if the link is a dropdown trigger
+        if (link.classList.contains('mobile-nav-link') && link.closest('.mobile-has-dropdown')) {
+          return;
+        }
         mobileToggle.setAttribute('aria-expanded', 'false');
         mobileToggle.classList.remove('is-active');
         mobileDrawer.classList.remove('is-open');
+        document.body.style.overflow = '';
       });
     });
   }
@@ -304,6 +353,8 @@ const currentPath = Astro.url.pathname;
     border: none;
     cursor: pointer;
     padding: 0;
+    position: relative;
+    z-index: 1100;
   }
 
   .hamburger-bar {
@@ -312,6 +363,10 @@ const currentPath = Astro.url.pathname;
     background-color: #1a1a1a;
     border-radius: 2px;
     transition: all 0.3s ease;
+  }
+
+  .mobile-toggle.is-active .hamburger-bar {
+    background-color: #ffffff;
   }
 
   .mobile-toggle.is-active .hamburger-bar:nth-child(1) {
@@ -327,53 +382,131 @@ const currentPath = Astro.url.pathname;
   /* Mobile Drawer */
   .mobile-drawer {
     display: none;
-    max-height: 0;
-    overflow: hidden;
-    background-color: #ffffff;
-    border-bottom: 1px solid #eeeeee;
-    transition: max-height 0.35s ease-in-out;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background-color: #000000;
+    color: #ffffff;
+    z-index: 1050;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto;
+    box-sizing: border-box;
   }
 
   .mobile-drawer.is-open {
-    max-height: 500px;
+    transform: translateX(0);
   }
 
   .mobile-nav {
-    padding: 20px 28px 24px;
+    padding: 100px 32px 40px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    justify-content: space-between;
+    min-height: 100%;
+    box-sizing: border-box;
   }
 
   .mobile-nav-list {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 24px;
+  }
+
+  .mobile-nav-item {
+    border-bottom: 1px solid #222222;
+    padding-bottom: 16px;
+  }
+
+  .mobile-nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
   }
 
   .mobile-nav-link {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #222222;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #ffffff;
+    transition: color 0.2s ease;
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link:active {
+    color: var(--color-primary, #a02a27);
+  }
+
+  .mobile-dropdown-toggle {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-nav-item.is-expanded .mobile-dropdown-toggle {
+    transform: rotate(180deg);
+  }
+
+  .mobile-chevron {
+    stroke: #ffffff;
   }
 
   .mobile-sub-list {
-    margin-top: 8px;
-    margin-left: 16px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin-top 0.3s ease;
+    margin-left: 12px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 12px;
+  }
+
+  .mobile-nav-item.is-expanded .mobile-sub-list {
+    max-height: 800px;
+    opacity: 1;
+    margin-top: 16px;
   }
 
   .mobile-sub-link {
-    font-size: 0.9rem;
-    color: #666666;
+    font-size: 1.1rem;
+    color: #aaaaaa;
+    transition: color 0.2s ease;
+    display: block;
+    padding: 4px 0;
+  }
+
+  .mobile-sub-link:hover,
+  .mobile-sub-link:active {
+    color: #ffffff;
+  }
+
+  .mobile-sub-link-all {
+    color: var(--color-primary, #a02a27);
+    font-weight: 600;
   }
 
   .mobile-btn-contacto {
     width: 100%;
-    margin-top: 10px;
-    padding: 12px 0;
+    margin-top: 40px;
+    padding: 16px 0;
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+  }
+
+  .mobile-btn-contacto:hover {
+    background-color: var(--color-primary, #a02a27);
+    color: #ffffff;
   }
 
   /* Red Banner / Product Ribbon */
