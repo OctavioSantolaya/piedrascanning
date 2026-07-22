@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import FloatingButtons from '../components/FloatingButtons.astro';
 import '../styles/global.css';
 
@@ -35,6 +36,7 @@ const {
     <main>
       <slot />
     </main>
+    <Footer />
     <FloatingButtons />
   </body>
 </html>

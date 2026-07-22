@@ -1,0 +1,153 @@
+---
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+const footerNav: NavItem[] = [
+  { label: 'El proceso', href: '/#el-proceso' },
+  { label: 'Inicio', href: '/' },
+  { label: 'La empresa', href: '/la-empresa' },
+  { label: 'Productos', href: '/#productos' },
+  { label: 'Proyectos', href: '/#proyectos' },
+];
+---
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <h2 class="brand-title">PIEDRAS CANNING</h2>
+        <p class="brand-tagline">Venta e instalación.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Navegación pie de página">
+        <ul class="footer-nav-list">
+          {footerNav.map((item) => (
+            <li>
+              <a href={item.href} class="footer-link">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="credit-text">
+        Sitio web desarrollado por <a href="https://brikerly.com" target="_blank" rel="noopener noreferrer" class="credit-link">Brikerly</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    width: 100%;
+    background-color: var(--color-primary, #a02a27);
+    color: #ffffff;
+    padding: 48px 0 28px 0;
+  }
+
+  .footer-container {
+    max-width: var(--max-width, 1280px);
+    margin: 0 auto;
+    padding: 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .footer-main {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .brand-title {
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .brand-tagline {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.92);
+    margin: 0;
+  }
+
+  .footer-nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .footer-nav-list {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .footer-link {
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #ffffff;
+    transition: opacity 0.2s ease;
+  }
+
+  .footer-link:hover {
+    opacity: 0.8;
+  }
+
+  .footer-bottom {
+    margin-top: 8px;
+  }
+
+  .credit-text {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.92);
+    margin: 0;
+  }
+
+  .credit-link {
+    color: #ffffff;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  .credit-link:hover {
+    opacity: 0.85;
+  }
+
+  @media (max-width: 768px) {
+    .site-footer {
+      padding: 36px 0 24px 0;
+    }
+
+    .footer-main {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .footer-nav-list {
+      gap: 14px 24px;
+    }
+  }
+</style>

@@ -39,6 +39,7 @@ const categoryList = [
   "Pisos",
   "Materiales"
 ];
+const currentPath = Astro.url.pathname;
 ---
 
 <header class="site-header">
@@ -53,30 +54,33 @@ const categoryList = [
       <!-- Desktop Navigation -->
       <nav class="desktop-nav" aria-label="Navegación principal">
         <ul class="nav-list">
-          {navItems.map((item) => (
-            <li class={`nav-item ${item.hasDropdown ? 'has-dropdown' : ''}`}>
-              <a href={item.href} class="nav-link">
-                {item.label}
-                {item.hasDropdown && (
-                  <svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                )}
-              </a>
+          {navItems.map((item) => {
+            const isActive = currentPath === item.href || (item.href !== '/' && !item.href.startsWith('#') && currentPath.startsWith(item.href));
+            return (
+              <li class={`nav-item ${item.hasDropdown ? 'has-dropdown' : ''}`}>
+                <a href={item.href} class={`nav-link ${isActive ? 'active' : ''}`}>
+                  {item.label}
+                  {item.hasDropdown && (
+                    <svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  )}
+                </a>
 
-              {item.hasDropdown && item.children && (
-                <ul class="dropdown-menu">
-                  {item.children.map((child) => (
-                    <li>
-                      <a href={child.href} class="dropdown-link">
-                        {child.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
+                {item.hasDropdown && item.children && (
+                  <ul class="dropdown-menu">
+                    {item.children.map((child) => (
+                      <li>
+                        <a href={child.href} class="dropdown-link">
+                          {child.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <!-- Contact Button CTA -->
@@ -216,7 +220,8 @@ const categoryList = [
     padding: 8px 0;
   }
 
-  .nav-link:hover {
+  .nav-link:hover,
+  .nav-link.active {
     color: var(--color-primary, #a02a27);
   }
 
