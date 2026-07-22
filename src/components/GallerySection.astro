@@ -1,0 +1,219 @@
+---
+const galleryImages = [
+  { src: "/images/galeria/img-1.png", alt: "Proyecto Piedras Canning 1" },
+  { src: "/images/galeria/img-2.png", alt: "Proyecto Piedras Canning 2" },
+  { src: "/images/galeria/img-3.jpg", alt: "Proyecto Piedras Canning 3" },
+  { src: "/images/galeria/img-4.jpg", alt: "Proyecto Piedras Canning 4" },
+  { src: "/images/galeria/img-5.png", alt: "Proyecto Piedras Canning 5" },
+  { src: "/images/galeria/img-6.png", alt: "Proyecto Piedras Canning 6" },
+  { src: "/images/galeria/img-7.jpg", alt: "Proyecto Piedras Canning 7" },
+  { src: "/images/galeria/img-8.jpg", alt: "Proyecto Piedras Canning 8" },
+  { src: "/images/galeria/img-9.png", alt: "Proyecto Piedras Canning 9" },
+  { src: "/images/galeria/img-10.jpg", alt: "Proyecto Piedras Canning 10" },
+  { src: "/images/galeria/img-11.png", alt: "Proyecto Piedras Canning 11" },
+  { src: "/images/galeria/img-12.jpg", alt: "Proyecto Piedras Canning 12" },
+  { src: "/images/galeria/img-13.jpg", alt: "Proyecto Piedras Canning 13" },
+  { src: "/images/galeria/img-14.jpg", alt: "Proyecto Piedras Canning 14" },
+  { src: "/images/galeria/img-15.png", alt: "Proyecto Piedras Canning 15" },
+  { src: "/images/galeria/img-16.png", alt: "Proyecto Piedras Canning 16" },
+  { src: "/images/galeria/img-17.jpg", alt: "Proyecto Piedras Canning 17" },
+  { src: "/images/galeria/img-18.jpg", alt: "Proyecto Piedras Canning 18" },
+  { src: "/images/galeria/img-19.png", alt: "Proyecto Piedras Canning 19" }
+];
+---
+
+<section id="galeria" class="gallery-section">
+  <div class="gallery-container">
+    <h2 class="section-title">Imagenes de proyectos</h2>
+
+    <!-- Masonry Gallery Grid -->
+    <div class="masonry-grid">
+      {galleryImages.map((img, index) => (
+        <div class="masonry-item" data-index={index}>
+          <img 
+            src={img.src} 
+            alt={img.alt} 
+            class="masonry-img" 
+            loading="lazy" 
+            decoding="async"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="lightbox-modal" aria-hidden="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar imagen">&times;</button>
+    <img src="" alt="" class="lightbox-img" id="lightbox-img" />
+  </div>
+</section>
+
+<script>
+  // Lightbox Modal Logic
+  const items = document.querySelectorAll('.masonry-item');
+  const modal = document.getElementById('lightbox-modal');
+  const modalImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const closeBtn = document.getElementById('lightbox-close');
+
+  if (items && modal && modalImg && closeBtn) {
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        if (img) {
+          modalImg.src = img.src;
+          modalImg.alt = img.alt;
+          modal.classList.add('is-active');
+          modal.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+
+    const closeModal = () => {
+      modal.classList.remove('is-active');
+      modal.setAttribute('aria-hidden', 'true');
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+        closeModal();
+      }
+    });
+  }
+</script>
+
+<style>
+  .gallery-section {
+    width: 100%;
+    background-color: #f4f4f4;
+    padding: 80px 0;
+  }
+
+  .gallery-container {
+    max-width: var(--max-width, 1280px);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    color: #111111;
+    text-align: center;
+    margin-bottom: 54px;
+    letter-spacing: -0.01em;
+  }
+
+  /* Masonry Grid Layout using CSS Columns */
+  .masonry-grid {
+    column-count: 3;
+    column-gap: 24px;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  }
+
+  .masonry-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  .masonry-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+  }
+
+  .masonry-item:hover .masonry-img {
+    filter: brightness(1.03);
+  }
+
+  /* Lightbox Modal */
+  .lightbox-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.88);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 24px;
+  }
+
+  .lightbox-modal.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .lightbox-img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    font-size: 3rem;
+    color: #ffffff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .lightbox-close:hover {
+    color: var(--color-primary, #a02a27);
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 992px) {
+    .masonry-grid {
+      column-count: 2;
+      column-gap: 20px;
+    }
+    .masonry-item {
+      margin-bottom: 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .gallery-section {
+      padding: 50px 0;
+    }
+
+    .section-title {
+      margin-bottom: 36px;
+    }
+
+    .masonry-grid {
+      column-count: 1;
+    }
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+interface Props {
+  whatsappUrl?: string;
+}
+
+const { whatsappUrl = "https://wa.me/5491121850895" } = Astro.props;
+---
+
+<div class="floating-controls">
+  <!-- Volver hacia arriba (Scroll to top) -->
+  <button id="scroll-to-top" class="btn-floating btn-scroll" aria-label="Volver hacia arriba">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <!-- WhatsApp Button -->
+  <a 
+    href={whatsappUrl} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    class="btn-floating btn-whatsapp" 
+    aria-label="Contactar por WhatsApp"
+  >
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 1.891.525 3.66 1.438 5.168L2 22l4.982-1.309A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm.006 2.5a7.48 7.48 0 0 1 5.3 2.194 7.48 7.48 0 0 1 2.194 5.3 7.48 7.48 0 0 1-2.194 5.3 7.48 7.48 0 0 1-5.3 2.194c-1.42 0-2.772-.395-3.935-1.088l-.282-.167-2.924.767.781-2.85-.184-.293A7.457 7.457 0 0 1 4.506 12a7.48 7.48 0 0 1 2.194-5.3 7.48 7.48 0 0 1 5.3-2.194z" fill="#ffffff"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M16.545 14.183c-.27.761-1.362 1.484-1.879 1.572-.45.076-.9.323-2.9-.475-2.4-0.957-3.923-3.39-4.043-3.551-.12-.162-.977-1.298-.977-2.476 0-1.179.615-1.758.835-1.996.22-.239.48-.3.639-.3.16 0 .32 0 .46 0 .15 0 .35-.06.55.425.2.485.68 1.662.74 1.782.06.12.1.26.02.425-.08.16-.12.26-.24.405-.12.145-.25.325-.36.435-.12.12-.25.25-.1.51.15.26.666 1.107 1.43 1.788.98.875 1.8 1.144 2.06 1.274.26.13.41.11.56-.06.15-.175.64-.745.81-1 .17-.258.34-.218.57-.133.23.085 1.46.69 1.71.815.25.122.42.182.48.282.06.1.06.58-.21 1.343z" fill="#ffffff"/>
+    </svg>
+  </a>
+</div>
+
+<script>
+  const scrollBtn = document.getElementById('scroll-to-top');
+
+  if (scrollBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 200) {
+        scrollBtn.classList.add('visible');
+      } else {
+        scrollBtn.classList.remove('visible');
+      }
+    });
+
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
+</script>
+
+<style>
+  .floating-controls {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn-floating {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    outline: none;
+    user-select: none;
+  }
+
+  /* Square Scroll To Top Button without background */
+  .btn-scroll {
+    width: 46px;
+    height: 46px;
+    background-color: transparent;
+    border: 2px solid #111111;
+    color: #111111;
+    border-radius: 0px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background-color 0.2s ease;
+  }
+
+  .btn-scroll.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .btn-scroll:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+  }
+
+  /* Circular WhatsApp Button with official WhatsApp vector */
+  .btn-whatsapp {
+    width: 56px;
+    height: 56px;
+    background-color: #25d366;
+    border-radius: 50%;
+    color: #ffffff;
+    box-shadow: none;
+    transition: transform 0.25s ease;
+  }
+
+  .btn-whatsapp:hover {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: none;
+  }
+
+  @media (max-width: 768px) {
+    .floating-controls {
+      bottom: 18px;
+      right: 18px;
+      gap: 10px;
+    }
+
+    .btn-scroll {
+      width: 42px;
+      height: 42px;
+    }
+
+    .btn-whatsapp {
+      width: 50px;
+      height: 50px;
+    }
+
+    .btn-whatsapp svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
+</style>

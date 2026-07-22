@@ -50,4 +50,9 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+  box-shadow: none !important;
+}
+
+button, .btn-floating, .btn-whatsapp, .btn-contacto, .btn-ver-mas, a[class*="btn-"] {
+  box-shadow: none !important;
 }
