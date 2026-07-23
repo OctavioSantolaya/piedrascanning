@@ -39,7 +39,7 @@ const { whatsappUrl = "https://wa.me/5491121850895" } = Astro.props;
       } else {
         scrollBtn.classList.remove('visible');
       }
-    });
+    }, { passive: true });
 
     scrollBtn.addEventListener('click', () => {
       window.scrollTo({
