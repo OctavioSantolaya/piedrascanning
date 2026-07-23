@@ -81,6 +81,9 @@ const server = http.createServer((req, res) => {
 
     res.setHeader('Content-Type', contentType);
     res.setHeader('Cache-Control', ext === '.html' ? 'no-cache' : 'public, max-age=31536000, immutable');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
 
     const stream = fs.createReadStream(filePath);
     stream.on('error', () => {

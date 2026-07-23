@@ -18,11 +18,14 @@ const proyectos = allProyectos
             <div class="image-wrapper">
               <img 
                 src={proyecto.data.featuredImage} 
-                alt={proyecto.data.title} 
+                alt={`${proyecto.data.title} - Piedras Canning`} 
                 class="proyecto-img" 
+                width="400"
+                height="300"
                 loading="lazy"
                 decoding="async"
               />
+
             </div>
             <div class="card-content">
               <h3 class="proyecto-title">{proyecto.data.title}</h3>

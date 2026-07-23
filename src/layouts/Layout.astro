@@ -8,12 +8,84 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  type?: string;
+  canonical?: string;
+  jsonLd?: Record<string, any> | Array<Record<string, any>>;
 }
 
 const { 
-  title = "Piedras Canning - Pórfidos, Lajas, Muretes, Revestimientos y Pisos",
-  description = "Piedras Canning es líder en venta y colocación de pórfidos, lajas, muretes, atérmicos, venecitas, revestimientos y pisos de piedra natural."
+  title = "Piedras Canning | Pórfidos, Lajas, Muretes, Revestimientos y Pisos",
+  description = "Piedras Canning es líder en venta y colocación artesanal de pórfidos, lajas, muretes, atérmicos, venecitas, revestimientos y pisos de piedra natural.",
+  image = "/images/piedras-mar.jpg",
+  type = "website",
+  canonical,
+  jsonLd
 } = Astro.props;
+
+const siteUrl = Astro.site ? Astro.site.origin : Astro.url.origin;
+const canonicalUrl = canonical || Astro.url.href;
+const imageUrl = image.startsWith('http') ? image : `${siteUrl}${image.startsWith('/') ? '' : '/'}${image}`;
+
+const baseSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["LocalBusiness", "Store", "HomeGoodsStore"],
+      "@id": `${siteUrl}/#organization`,
+      "name": "Piedras Canning",
+      "url": siteUrl,
+      "logo": `${siteUrl}/favicon.svg`,
+      "image": imageUrl,
+      "description": "Empresa especializada en venta y colocación artesanal de piedras naturales, lajas, muretes, pórfidos, atérmicos, revestimientos y pisos con 70 años de historia.",
+      "telephone": ["+5491121850895", "+541127270766"],
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Autopista Ezeiza Cañuelas, Bajada colectora km 41",
+        "addressLocality": "Tristán Suárez",
+        "addressRegion": "Buenos Aires",
+        "addressCountry": "AR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -34.8872,
+        "longitude": -58.5448
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:00",
+          "closes": "17:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday"],
+          "opens": "08:00",
+          "closes": "13:00"
+        }
+      ],
+      "sameAs": [
+        "https://wa.me/5491121850895"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      "url": siteUrl,
+      "name": "Piedras Canning",
+      "publisher": {
+        "@id": `${siteUrl}/#organization`
+      },
+      "inLanguage": "es-AR"
+    }
+  ]
+};
+
+const combinedSchema = jsonLd 
+  ? { ...baseSchema, "@graph": [...baseSchema["@graph"], ...(Array.isArray(jsonLd) ? jsonLd : [jsonLd])] }
+  : baseSchema;
 ---
 
 <!DOCTYPE html>
@@ -22,8 +94,18 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={Astro.url.href} />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={canonicalUrl} />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#a02a27" />
+    <meta name="author" content="Piedras Canning" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+    <!-- Geolocation Meta Tags -->
+    <meta name="geo.region" content="AR-B" />
+    <meta name="geo.placename" content="Tristán Suárez, Canning, Ezeiza, Buenos Aires" />
+    <meta name="geo.position" content="-34.8872;-58.5448" />
+    <meta name="ICBM" content="-34.8872, -58.5448" />
     
     <!-- Preconnect & Fonts optimization -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,9 +116,26 @@ const {
     <meta name="description" content={description} />
     
     <!-- OpenGraph -->
+    <meta property="og:site_name" content="Piedras Canning" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={title} />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(combinedSchema)}></script>
 
     <GoogleAnalytics />
   </head>
@@ -55,3 +154,4 @@ const {
     flex: 1;
   }
 </style>
+

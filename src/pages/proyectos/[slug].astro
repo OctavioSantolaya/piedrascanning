@@ -19,11 +19,67 @@ const { title, description, featuredImage, images } = entry.data;
 const galleryImages = images && images.length > 0 
   ? images 
   : [featuredImage];
+
+const projectUrl = `https://piedrascanning.com/proyectos/${entry.id}`;
+const fullImageUrl = featuredImage.startsWith('http') ? featuredImage : `https://piedrascanning.com${featuredImage.startsWith('/') ? '' : '/'}${featuredImage}`;
+
+const breadcrumbSchema = {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://piedrascanning.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Proyectos",
+      "item": "https://piedrascanning.com/proyectos"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": title,
+      "item": projectUrl
+    }
+  ]
+};
+
+const articleSchema = {
+  "@type": "Article",
+  "@id": `${projectUrl}/#article`,
+  "headline": title,
+  "description": description || `${title} - Obra y proyecto de colocación artesanal realizado por Piedras Canning.`,
+  "image": fullImageUrl,
+  "mainEntityOfPage": projectUrl,
+  "author": {
+    "@type": "Organization",
+    "name": "Piedras Canning",
+    "url": "https://piedrascanning.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Piedras Canning",
+    "url": "https://piedrascanning.com/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://piedrascanning.com/favicon.svg"
+    }
+  }
+};
+
+const pageSchemas = [breadcrumbSchema, articleSchema];
 ---
 
 <Layout 
-  title={`${title} | Piedras Canning`} 
-  description={description || `${title} - Proyecto realizado por Piedras Canning.`}
+  title={`${title} | Obra y Proyecto | Piedras Canning`} 
+  description={description || `${title} - Proyecto de colocación artesanal de piedra natural realizado por Piedras Canning.`}
+  image={featuredImage}
+  type="article"
+  canonical={projectUrl}
+  jsonLd={pageSchemas}
 >
   <article class="proyecto-detail-page">
     <!-- Top Hero Section (Gray Background Banner) -->
@@ -43,8 +99,10 @@ const galleryImages = images && images.length > 0
         <div class="featured-image-wrapper">
           <img 
             src={featuredImage} 
-            alt={title} 
+            alt={`${title} - Piedras Canning`} 
             class="featured-img" 
+            width="1000"
+            height="650"
             loading="eager"
             decoding="async"
           />
@@ -59,8 +117,10 @@ const galleryImages = images && images.length > 0
               <div class="gallery-item">
                 <img 
                   src={imgUrl} 
-                  alt={`${title} - foto ${index + 2}`} 
+                  alt={`${title} - Piedras Canning foto ${index + 2}`} 
                   class="gallery-img" 
+                  width="500"
+                  height="375"
                   loading="lazy"
                   decoding="async"
                 />
@@ -69,6 +129,7 @@ const galleryImages = images && images.length > 0
           </div>
         </section>
       )}
+
 
       <!-- Markdown Body Content (if any extra text) -->
       <div class="markdown-body">

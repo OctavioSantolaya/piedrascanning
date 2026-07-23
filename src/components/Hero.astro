@@ -12,6 +12,8 @@ const {
 } = Astro.props;
 ---
 
+<link rel="preload" as="image" href={bgImage} fetchpriority="high" />
+
 <section class="hero-section" style={`background-image: url('${bgImage}');`}>
   <div class="hero-overlay"></div>
   <div class="hero-container">
@@ -19,6 +21,7 @@ const {
     <p class="hero-subtitle">{subtitle}</p>
   </div>
 </section>
+
 
 <style>
   .hero-section {

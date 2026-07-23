@@ -1,0 +1,310 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="Página no encontrada (404) | Piedras Canning" 
+  description="La página que estás buscando no existe o ha sido movida. Explorá los productos, proyectos e historia de Piedras Canning."
+>
+  <div class="error-page">
+    <!-- Hero Banner (Mismo estilo que La Empresa / El Proceso) -->
+    <section class="error-hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <span class="hero-badge">ERROR 404</span>
+        <h1 class="hero-title">Página no encontrada</h1>
+      </div>
+    </section>
+
+    <!-- Intro Text Section -->
+    <section class="intro-section">
+      <div class="intro-container">
+        <p class="intro-text">
+          Lo sentimos, la página que estás buscando no existe, ha sido eliminada o cambió de dirección.
+        </p>
+      </div>
+    </section>
+
+    <!-- Quick Navigation Shortcuts -->
+    <section class="shortcuts-section">
+      <div class="shortcuts-container">
+        <h2 class="shortcuts-title">¿Qué estás buscando?</h2>
+        
+        <div class="shortcuts-grid">
+          <a href="/" class="shortcut-card">
+            <div class="shortcut-icon">🏠</div>
+            <h3 class="shortcut-name">Inicio</h3>
+            <p class="shortcut-desc">Volver a la portada principal de Piedras Canning.</p>
+            <span class="shortcut-link">Ir al inicio ➔</span>
+          </a>
+
+          <a href="/productos" class="shortcut-card">
+            <div class="shortcut-icon">🪨</div>
+            <h3 class="shortcut-name">Nuestros Productos</h3>
+            <p class="shortcut-desc">Explorá pórfidos, lajas, muretes, atérmicos e insumos.</p>
+            <span class="shortcut-link">Ver catálogo ➔</span>
+          </a>
+
+          <a href="/proyectos" class="shortcut-card">
+            <div class="shortcut-icon">🏗️</div>
+            <h3 class="shortcut-name">Obras y Proyectos</h3>
+            <p class="shortcut-desc">Descubrí nuestros trabajos de colocación artesanal.</p>
+            <span class="shortcut-link">Ver obras ➔</span>
+          </a>
+
+          <a href="/la-empresa" class="shortcut-card">
+            <div class="shortcut-icon">🏛️</div>
+            <h3 class="shortcut-name">La Empresa</h3>
+            <p class="shortcut-desc">70 años de historia y tradición en piedras naturales.</p>
+            <span class="shortcut-link">Nuestra historia ➔</span>
+          </a>
+        </div>
+
+        <div class="contact-cta-wrapper">
+          <p class="cta-text">¿Necesitás ayuda o querés hacer una consulta directa?</p>
+          <a href="https://wa.me/5491121850895" target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+            Contactar por WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .error-page {
+    width: 100%;
+    background-color: #ffffff;
+  }
+
+  /* Hero Banner */
+  .error-hero {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    background-image: url('/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #ffffff;
+    background-color: var(--color-primary, #a02a27);
+    padding: 4px 16px;
+    border-radius: 50px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-family: var(--font-sans);
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Intro Section */
+  .intro-section {
+    padding: 60px 24px 30px 24px;
+    text-align: center;
+  }
+
+  .intro-container {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .intro-text {
+    font-family: var(--font-sans);
+    font-size: clamp(1.1rem, 2.2vw, 1.25rem);
+    font-weight: 500;
+    color: var(--color-text-main, #1f1f24);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Shortcuts Grid Section */
+  .shortcuts-section {
+    padding: 20px 24px 90px 24px;
+    background-color: #ffffff;
+  }
+
+  .shortcuts-container {
+    max-width: var(--max-width, 1280px);
+    margin: 0 auto;
+  }
+
+  .shortcuts-title {
+    font-family: var(--font-sans);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: #111111;
+    text-align: center;
+    margin-bottom: 40px;
+    letter-spacing: -0.01em;
+  }
+
+  .shortcuts-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .shortcut-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 28px 24px;
+    text-decoration: none;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .shortcut-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-primary, #a02a27);
+    box-shadow: 0 8px 24px rgba(160, 42, 39, 0.08);
+  }
+
+  .shortcut-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+  }
+
+  .shortcut-name {
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 8px 0;
+    transition: color 0.2s ease;
+  }
+
+  .shortcut-card:hover .shortcut-name {
+    color: var(--color-primary, #a02a27);
+  }
+
+  .shortcut-desc {
+    font-family: var(--font-sans);
+    font-size: 0.92rem;
+    color: #55555e;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+    flex: 1;
+  }
+
+  .shortcut-link {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #111111;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-top: auto;
+    transition: color 0.2s ease;
+  }
+
+  .shortcut-card:hover .shortcut-link {
+    color: var(--color-primary, #a02a27);
+  }
+
+  /* Contact CTA */
+  .contact-cta-wrapper {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 36px 24px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .cta-text {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #111111;
+    margin: 0;
+  }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary, #a02a27);
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 12px 32px;
+    border-radius: 50px;
+    transition: all 0.25s ease;
+  }
+
+  .btn-whatsapp:hover {
+    background-color: var(--color-primary-dark, #801e1c);
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .shortcuts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .error-hero {
+      height: 240px;
+    }
+
+    .intro-section {
+      padding: 40px 20px 20px 20px;
+    }
+
+    .shortcuts-section {
+      padding: 10px 20px 60px 20px;
+    }
+
+    .shortcuts-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+</style>

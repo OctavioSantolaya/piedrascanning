@@ -28,12 +28,61 @@ const fileButtons = [
     url: "/files/Catalogo-Piedras-Canning-2026.pdf"
   }
 ];
+const breadcrumbSchema = {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://piedrascanning.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Productos",
+      "item": "https://piedrascanning.com/productos"
+    }
+  ]
+};
+
+const itemListSchema = {
+  "@type": "ItemList",
+  "name": "Catálogo de Productos de Piedras Canning",
+  "numberOfItems": categories.reduce((acc, cat) => acc + cat.items.length, 0),
+  "itemListElement": categories.flatMap((cat, catIdx) => 
+    cat.items.map((item, itemIdx) => ({
+      "@type": "ListItem",
+      "position": catIdx * 100 + itemIdx + 1,
+      "item": {
+        "@type": "Product",
+        "name": item.name,
+        "category": cat.name,
+        "image": item.image.startsWith('http') ? item.image : `https://piedrascanning.com${item.image.startsWith('/') ? '' : '/'}${item.image}`,
+        "description": `${item.name} - Piedra natural de la categoría ${cat.name} disponible en Piedras Canning.`,
+        "brand": {
+          "@type": "Brand",
+          "name": "Piedras Canning"
+        },
+        "offers": {
+          "@type": "Offer",
+          "availability": "https://schema.org/InStock",
+          "priceCurrency": "ARS"
+        }
+      }
+    }))
+  )
+};
+
+const pageSchemas = [breadcrumbSchema, itemListSchema];
 ---
 
 <Layout 
-  title="Productos | Piedras Canning" 
-  description="Descubrí todos los productos de piedras naturales, lajas, muretes, pórfidos, atérmicos y materiales que tenemos en Piedras Canning."
+  title="Catálogo de Productos | Pórfidos, Lajas, Muretes y Atérmicos | Piedras Canning" 
+  description="Explorá el catálogo completo de Piedras Canning: pórfidos, lajas San Luis, muretes, voladuras, baldosas de hormigón, atérmicos para piscina y materiales de construcción."
+  jsonLd={pageSchemas}
 >
+
   <div class="productos-page">
     <!-- Header Hero Section (Fondo Blanco) -->
     <section class="hero-section">

@@ -1,0 +1,16 @@
+{
+  "name": "Piedras Canning - Especialistas en Piedras Naturales",
+  "short_name": "Piedras Canning",
+  "description": "Líder en venta y colocación de pórfidos, lajas, muretes, atérmicos, venecitas, revestimientos y pisos de piedra natural.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#a02a27",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
