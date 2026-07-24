@@ -8,14 +8,19 @@ const { className = "", height = 73 } = Astro.props;
 ---
 
 <div class={`logo-wrapper ${className}`}>
-  <img 
-    src="/images/logo.png" 
-    alt="Piedras Canning - Logo" 
-    class="logo-img"
-    style={`height: ${height}px;`}
-    loading="eager"
-    decoding="async"
-  />
+  <picture>
+    <source srcset="/images/logo.webp" type="image/webp" />
+    <img 
+      src="/images/logo.png" 
+      alt="Piedras Canning" 
+      class="logo-img"
+      width="220"
+      height={height}
+      style={`height: ${height}px; width: auto;`}
+      loading="eager"
+      decoding="async"
+    />
+  </picture>
 </div>
 
 <style>
