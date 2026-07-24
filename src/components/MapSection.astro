@@ -15,18 +15,43 @@ const {
     <div class="map-wrapper">
       <iframe
         title="Ubicación Piedras Canning"
-        src={mapQueryUrl}
+        data-src={mapQueryUrl}
         width="100%"
         height="480"
         style="border:0;"
-        allowfullscreen=""
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
         class="map-iframe"
+        id="map-iframe"
       ></iframe>
     </div>
   </div>
 </section>
+
+<script>
+  const iframe = document.getElementById('map-iframe') as HTMLIFrameElement;
+  if (iframe && iframe.dataset.src) {
+    const loadMap = () => {
+      if (!iframe.src && iframe.dataset.src) {
+        iframe.src = iframe.dataset.src;
+      }
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadMap();
+            observer.disconnect();
+          }
+        });
+      }, { rootMargin: '300px' });
+      observer.observe(iframe);
+    } else {
+      loadMap();
+    }
+  }
+</script>
 
 <style>
   .map-section {

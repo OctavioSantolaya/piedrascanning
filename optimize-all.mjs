@@ -11,15 +11,15 @@ async function optimizeLogo() {
   const img = sharp(fileBuf);
   
   const pngBuffer = await img.clone()
-    .resize({ height: 160, withoutEnlargement: true })
-    .png({ quality: 85, palette: true, compressionLevel: 9 })
+    .resize({ height: 140, withoutEnlargement: true })
+    .png({ quality: 80, palette: true, compressionLevel: 9 })
     .toBuffer();
     
   fs.writeFileSync(logoPath, pngBuffer);
   
   const webpBuffer = await img.clone()
-    .resize({ height: 160, withoutEnlargement: true })
-    .webp({ quality: 80, effort: 6 })
+    .resize({ height: 140, withoutEnlargement: true })
+    .webp({ quality: 78, effort: 6 })
     .toBuffer();
     
   fs.writeFileSync(webpPath, webpBuffer);
@@ -33,21 +33,24 @@ async function processImage(fullPath) {
 
   const normalizedPath = fullPath.replace(/\\/g, '/');
 
-  let maxW = 1000;
-  let targetQuality = 75;
+  let maxW = 900;
+  let targetQuality = 70;
 
   if (normalizedPath.includes('/proyectos/') && normalizedPath.includes('featured')) {
-    maxW = 750;
-    targetQuality = 72;
+    maxW = 600;
+    targetQuality = 65;
   } else if (normalizedPath.includes('/productos/')) {
-    maxW = 500;
-    targetQuality = 75;
+    maxW = 450;
+    targetQuality = 70;
   } else if (normalizedPath.includes('/galeria/')) {
-    maxW = 800;
-    targetQuality = 72;
+    maxW = 700;
+    targetQuality = 65;
   } else if (normalizedPath.includes('/proyectos/')) {
+    maxW = 850;
+    targetQuality = 70;
+  } else if (normalizedPath.includes('sobre-nosotros-bg')) {
     maxW = 900;
-    targetQuality = 75;
+    targetQuality = 65;
   }
 
   try {
@@ -95,7 +98,7 @@ function getAllFiles(dir) {
   return files;
 }
 
-console.log('Starting parallel image optimization...');
+console.log('Starting parallel image re-compression...');
 await optimizeLogo();
 
 const allFiles = getAllFiles(path.resolve('public/images'));
@@ -106,4 +109,4 @@ for (let i = 0; i < allFiles.length; i += batchSize) {
   await Promise.all(batch.map(f => processImage(f)));
 }
 
-console.log('Parallel image optimization finished!');
+console.log('Parallel image re-compression finished!');
