@@ -16,16 +16,18 @@ const proyectos = allProyectos
         <article class="proyecto-card">
           <a href={`/proyectos/${proyecto.id}`} class="card-link">
             <div class="image-wrapper">
-              <img 
-                src={proyecto.data.featuredImage} 
-                alt={`${proyecto.data.title} - Piedras Canning`} 
-                class="proyecto-img" 
-                width="400"
-                height="300"
-                loading="lazy"
-                decoding="async"
-              />
-
+              <picture>
+                <source srcset={proyecto.data.featuredImage.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
+                <img 
+                  src={proyecto.data.featuredImage} 
+                  alt={`${proyecto.data.title} - Piedras Canning`} 
+                  class="proyecto-img" 
+                  width="400"
+                  height="300"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             </div>
             <div class="card-content">
               <h3 class="proyecto-title">{proyecto.data.title}</h3>

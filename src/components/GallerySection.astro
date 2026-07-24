@@ -29,15 +29,18 @@ const galleryImages = [
     <div class="masonry-grid">
       {galleryImages.map((img, index) => (
         <div class="masonry-item" data-index={index}>
-          <img 
-            src={img.src} 
-            alt={img.alt} 
-            class="masonry-img" 
-            width="400"
-            height="300"
-            loading="lazy" 
-            decoding="async"
-          />
+          <picture>
+            <source srcset={img.src.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
+            <img 
+              src={img.src} 
+              alt={img.alt} 
+              class="masonry-img" 
+              width="400"
+              height="300"
+              loading="lazy" 
+              decoding="async"
+            />
+          </picture>
         </div>
       ))}
 
