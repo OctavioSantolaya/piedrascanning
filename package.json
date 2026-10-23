@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:pages": "astro build && node scripts/prepare-pages.mjs",
     "preview": "astro preview",
     "start": "node server.mjs",
     "astro": "astro"
