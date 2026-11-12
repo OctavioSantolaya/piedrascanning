@@ -1,5 +1,12 @@
 ---
-const galleryImages = [
+interface GalleryMedia {
+  type?: 'image' | 'video';
+  src: string;
+  poster?: string;
+  alt: string;
+}
+
+const initialGalleryImages: GalleryMedia[] = [
   { src: "/images/galeria/img-2.png", alt: "Proyecto Piedras Canning 2" },
   { src: "/images/galeria/img-3.jpg", alt: "Proyecto Piedras Canning 3" },
   { src: "/images/galeria/img-4.jpg", alt: "Proyecto Piedras Canning 4" },
@@ -19,6 +26,65 @@ const galleryImages = [
   { src: "/images/galeria/img-18.jpg", alt: "Proyecto Piedras Canning 18" },
   { src: "/images/galeria/img-19.png", alt: "Proyecto Piedras Canning 19" }
 ];
+
+const extraGalleryMedia: GalleryMedia[] = [
+  { src: "/images/galeria/proyecto-wa-0018.jpg", alt: "Colocación artesanal Piedras Canning" },
+  { type: "video", src: "/images/galeria/video-wa-0020.mp4", poster: "/images/galeria/video-wa-0020-poster.jpg", alt: "Video de obra Piedras Canning 1" },
+  { src: "/images/galeria/proyecto-wa-0021.jpg", alt: "Proyecto Piedras Canning 21" },
+  { src: "/images/galeria/proyecto-wa-0022.jpg", alt: "Proyecto Piedras Canning 22" },
+  { src: "/images/galeria/proyecto-wa-0023.jpg", alt: "Proyecto Piedras Canning 23" },
+  { src: "/images/galeria/proyecto-wa-0024.jpg", alt: "Proyecto Piedras Canning 24" },
+  { src: "/images/galeria/proyecto-wa-0025.jpg", alt: "Proyecto Piedras Canning 25" },
+  { src: "/images/galeria/proyecto-wa-0026.jpg", alt: "Proyecto Piedras Canning 26" },
+  { type: "video", src: "/images/galeria/video-wa-0027.mp4", poster: "/images/galeria/video-wa-0027-poster.jpg", alt: "Video de obra Piedras Canning 2" },
+  { src: "/images/galeria/proyecto-wa-0028.jpg", alt: "Proyecto Piedras Canning 28" },
+  { src: "/images/galeria/proyecto-wa-0029.jpg", alt: "Proyecto Piedras Canning 29" },
+  { src: "/images/galeria/proyecto-wa-0030.jpg", alt: "Proyecto Piedras Canning 30" },
+  { src: "/images/galeria/proyecto-wa-0033.jpg", alt: "Proyecto Piedras Canning 33" },
+  { src: "/images/galeria/proyecto-wa-0034.jpg", alt: "Proyecto Piedras Canning 34" },
+  { src: "/images/galeria/proyecto-wa-0035.jpg", alt: "Proyecto Piedras Canning 35" },
+  { src: "/images/galeria/proyecto-wa-0036.jpg", alt: "Proyecto Piedras Canning 36" },
+  { src: "/images/galeria/proyecto-wa-0037.jpg", alt: "Proyecto Piedras Canning 37" },
+  { src: "/images/galeria/proyecto-wa-0038.jpg", alt: "Proyecto Piedras Canning 38" },
+  { src: "/images/galeria/proyecto-wa-0039.jpg", alt: "Proyecto Piedras Canning 39" },
+  { src: "/images/galeria/proyecto-wa-0040.jpg", alt: "Proyecto Piedras Canning 40" },
+  { src: "/images/galeria/proyecto-wa-0041.jpg", alt: "Proyecto Piedras Canning 41" },
+  { src: "/images/galeria/proyecto-wa-0042.jpg", alt: "Proyecto Piedras Canning 42" },
+  { src: "/images/galeria/proyecto-wa-0043.jpg", alt: "Proyecto Piedras Canning 43" },
+  { src: "/images/galeria/proyecto-wa-0044.jpg", alt: "Proyecto Piedras Canning 44" },
+  { src: "/images/galeria/proyecto-wa-0045.jpg", alt: "Proyecto Piedras Canning 45" },
+  { src: "/images/galeria/proyecto-wa-0047.jpg", alt: "Proyecto Piedras Canning 47" },
+  { src: "/images/galeria/proyecto-wa-0053.jpg", alt: "Proyecto Piedras Canning 53" },
+  { src: "/images/galeria/proyecto-wa-0054.jpg", alt: "Proyecto Piedras Canning 54" },
+  { src: "/images/galeria/proyecto-wa-0055.jpg", alt: "Proyecto Piedras Canning 55" },
+  { src: "/images/galeria/proyecto-wa-0057.jpg", alt: "Proyecto Piedras Canning 57" },
+  { src: "/images/galeria/proyecto-wa-0059.jpg", alt: "Proyecto Piedras Canning 59" },
+  { src: "/images/galeria/proyecto-wa-0060.jpg", alt: "Proyecto Piedras Canning 60" },
+  { src: "/images/galeria/proyecto-wa-0061.jpg", alt: "Proyecto Piedras Canning 61" },
+  { src: "/images/galeria/proyecto-wa-0062.jpg", alt: "Proyecto Piedras Canning 62" },
+  { src: "/images/galeria/proyecto-wa-0063.jpg", alt: "Proyecto Piedras Canning 63" },
+  { src: "/images/galeria/proyecto-wa-0064.jpg", alt: "Proyecto Piedras Canning 64" },
+  { src: "/images/galeria/proyecto-wa-0065.jpg", alt: "Proyecto Piedras Canning 65" },
+  { src: "/images/galeria/proyecto-wa-0066.jpg", alt: "Proyecto Piedras Canning 66" },
+  { src: "/images/galeria/proyecto-wa-0068.jpg", alt: "Proyecto Piedras Canning 68" },
+  { src: "/images/galeria/proyecto-wa-0010.jpg", alt: "Piedras naturales Piedras Canning 10" },
+  { src: "/images/galeria/proyecto-wa-0011.jpg", alt: "Piedras naturales Piedras Canning 11" },
+  { src: "/images/galeria/proyecto-wa-0012.jpg", alt: "Piedras naturales Piedras Canning 12" },
+  { src: "/images/galeria/proyecto-wa-0013.jpg", alt: "Piedras naturales Piedras Canning 13" },
+  { src: "/images/galeria/proyecto-wa-0014.jpg", alt: "Piedras naturales Piedras Canning 14" },
+  { src: "/images/galeria/proyecto-wa-0015.jpg", alt: "Piedras naturales Piedras Canning 15" },
+  { src: "/images/galeria/bacha-1.jpg", alt: "Bacha en piedra natural Piedras Canning 1" },
+  { src: "/images/galeria/bacha-2.jpg", alt: "Bacha en piedra natural Piedras Canning 2" },
+  { src: "/images/galeria/bacha-3.jpg", alt: "Bacha en piedra natural Piedras Canning 3" },
+  { src: "/images/galeria/bacha-4.jpg", alt: "Bacha en piedra natural Piedras Canning 4" },
+  { src: "/images/galeria/bacha-5.jpg", alt: "Bacha en piedra natural Piedras Canning 5" },
+  { src: "/images/galeria/bacha-6.jpg", alt: "Bacha en piedra natural Piedras Canning 6" },
+  { src: "/images/galeria/bacha-7.jpg", alt: "Bacha en piedra natural Piedras Canning 7" },
+  { src: "/images/galeria/bacha-8.jpg", alt: "Bacha en piedra natural Piedras Canning 8" },
+  { src: "/images/galeria/bacha-9.jpg", alt: "Bacha en piedra natural Piedras Canning 9" },
+  { src: "/images/galeria/bacha-10.jpg", alt: "Bacha en piedra natural Piedras Canning 10" },
+  { src: "/images/galeria/bacha-11.jpg", alt: "Bacha en piedra natural Piedras Canning 11" }
+];
 ---
 
 <section id="galeria" class="gallery-section">
@@ -26,9 +92,15 @@ const galleryImages = [
     <h2 class="section-title">Imagenes de proyectos</h2>
 
     <!-- Masonry Gallery Grid -->
-    <div class="masonry-grid">
-      {galleryImages.map((img, index) => (
-        <div class="masonry-item" data-index={index}>
+    <div class="masonry-grid" id="gallery-masonry-grid">
+      {initialGalleryImages.map((img, index) => (
+        <div 
+          class="masonry-item" 
+          data-index={index} 
+          data-type="image" 
+          data-src={img.src.replace(/\.(jpg|jpeg|png)$/i, '.webp')}
+          data-alt={img.alt}
+        >
           <picture>
             <source srcset={img.src.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp" />
             <img 
@@ -44,50 +116,190 @@ const galleryImages = [
         </div>
       ))}
 
+      {extraGalleryMedia.map((media, idx) => {
+        const index = initialGalleryImages.length + idx;
+        const isVideo = media.type === 'video';
+        const imgSrc = isVideo ? (media.poster || '') : media.src;
+        const webpSrc = imgSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+        return (
+          <div 
+            class={`masonry-item extra-gallery-item is-hidden ${isVideo ? 'is-video-item' : ''}`}
+            data-index={index}
+            data-type={isVideo ? 'video' : 'image'}
+            data-src={isVideo ? media.src : webpSrc}
+            data-alt={media.alt}
+          >
+            <picture>
+              <source data-srcset={webpSrc} type="image/webp" />
+              <img 
+                data-src={imgSrc} 
+                alt={media.alt} 
+                class="masonry-img deferred-img" 
+                width="400"
+                height="300"
+                loading="lazy" 
+                decoding="async"
+              />
+            </picture>
+            {isVideo && (
+              <div class="video-badge" aria-label="Reproducir video">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="8 5 19 12 8 19 8 5"></polygon>
+                </svg>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+
+    <div class="see-more-wrapper" id="gallery-see-more-wrapper">
+      <button type="button" class="btn-ver-mas" id="btn-ver-mas-galeria">
+        Ver más
+      </button>
     </div>
   </div>
 
   <!-- Lightbox Modal -->
   <div class="lightbox-modal" id="lightbox-modal" aria-hidden="true">
-    <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar imagen">&times;</button>
-    <img src="" alt="" class="lightbox-img" id="lightbox-img" />
+    <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar">&times;</button>
+    
+    <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Anterior">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <div class="lightbox-media-container">
+      <img src="" alt="" class="lightbox-img" id="lightbox-img" />
+      <video src="" controls playsinline class="lightbox-video" id="lightbox-video" style="display: none;"></video>
+    </div>
+
+    <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Siguiente">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
   </div>
 </section>
 
 <script>
-  // Lightbox Modal Logic
-  const items = document.querySelectorAll('.masonry-item');
-  const modal = document.getElementById('lightbox-modal');
-  const modalImg = document.getElementById('lightbox-img') as HTMLImageElement;
-  const closeBtn = document.getElementById('lightbox-close');
+  const btnVerMas = document.getElementById('btn-ver-mas-galeria');
+  const seeMoreWrapper = document.getElementById('gallery-see-more-wrapper');
+  const extraItems = document.querySelectorAll('.extra-gallery-item');
 
-  if (items && modal && modalImg && closeBtn) {
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
-        if (img) {
-          modalImg.src = img.src;
-          modalImg.alt = img.alt;
-          modal.classList.add('is-active');
-          modal.setAttribute('aria-hidden', 'false');
+  if (btnVerMas) {
+    btnVerMas.addEventListener('click', () => {
+      extraItems.forEach((item) => {
+        const source = item.querySelector('source');
+        const img = item.querySelector('img.deferred-img') as HTMLImageElement | null;
+        if (source && source.dataset.srcset) {
+          source.srcset = source.dataset.srcset;
+          source.removeAttribute('data-srcset');
         }
+        if (img && img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
+        item.classList.remove('is-hidden');
+      });
+
+      if (seeMoreWrapper) {
+        seeMoreWrapper.style.display = 'none';
+      }
+    });
+  }
+
+  // Lightbox Modal Logic
+  const allItems = Array.from(document.querySelectorAll('#gallery-masonry-grid .masonry-item')) as HTMLElement[];
+  const modal = document.getElementById('lightbox-modal');
+  const modalImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+  const modalVideo = document.getElementById('lightbox-video') as HTMLVideoElement | null;
+  const closeBtn = document.getElementById('lightbox-close');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+
+  let currentLightboxIndex = 0;
+
+  function getVisibleItems(): HTMLElement[] {
+    return allItems.filter(el => !el.classList.contains('is-hidden'));
+  }
+
+  function showLightboxAt(index: number) {
+    const visible = getVisibleItems();
+    if (visible.length === 0 || !modalImg || !modalVideo) return;
+
+    if (index < 0) index = visible.length - 1;
+    if (index >= visible.length) index = 0;
+    currentLightboxIndex = index;
+
+    const item = visible[currentLightboxIndex];
+    const type = item.dataset.type || 'image';
+    const src = item.dataset.src || '';
+    const alt = item.dataset.alt || '';
+
+    if (type === 'video') {
+      modalImg.style.display = 'none';
+      modalImg.src = '';
+      modalVideo.style.display = 'block';
+      modalVideo.src = src;
+      modalVideo.play().catch(() => {});
+    } else {
+      modalVideo.pause();
+      modalVideo.removeAttribute('src');
+      modalVideo.style.display = 'none';
+      modalImg.style.display = 'block';
+      modalImg.src = src;
+      modalImg.alt = alt;
+    }
+  }
+
+  if (allItems.length && modal && modalImg && modalVideo && closeBtn) {
+    allItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        const visible = getVisibleItems();
+        const idx = visible.indexOf(item);
+        showLightboxAt(idx !== -1 ? idx : 0);
+        modal.classList.add('is-active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
       });
     });
 
     const closeModal = () => {
       modal.classList.remove('is-active');
       modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      modalVideo.pause();
+      modalVideo.removeAttribute('src');
     };
 
     closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+      if (e.target === modal || (e.target as HTMLElement).classList.contains('lightbox-media-container')) {
         closeModal();
       }
+    });
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showLightboxAt(currentLightboxIndex - 1);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showLightboxAt(currentLightboxIndex + 1);
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (!modal.classList.contains('is-active')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowLeft') showLightboxAt(currentLightboxIndex - 1);
+      if (e.key === 'ArrowRight') showLightboxAt(currentLightboxIndex + 1);
     });
   }
 </script>
@@ -122,6 +334,7 @@ const galleryImages = [
   }
 
   .masonry-item {
+    position: relative;
     break-inside: avoid;
     margin-bottom: 24px;
     border-radius: 8px;
@@ -130,6 +343,10 @@ const galleryImages = [
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  }
+
+  .masonry-item.is-hidden {
+    display: none;
   }
 
   .masonry-item:hover {
@@ -149,6 +366,58 @@ const galleryImages = [
     filter: brightness(1.03);
   }
 
+  .video-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(160, 42, 39, 0.9);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    pointer-events: none;
+    transition: transform 0.25s ease, background-color 0.25s ease;
+  }
+
+  .masonry-item:hover .video-badge {
+    transform: translate(-50%, -50%) scale(1.1);
+    background-color: var(--color-primary, #a02a27);
+  }
+
+  .see-more-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  .btn-ver-mas {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary, #a02a27);
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 0.98rem;
+    font-weight: 600;
+    padding: 13px 38px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(160, 42, 39, 0.25);
+  }
+
+  .btn-ver-mas:hover {
+    background-color: var(--color-primary-dark, #801e1c);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(160, 42, 39, 0.35);
+  }
+
   /* Lightbox Modal */
   .lightbox-modal {
     position: fixed;
@@ -156,7 +425,7 @@ const galleryImages = [
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.88);
+    background-color: rgba(0, 0, 0, 0.9);
     z-index: 2000;
     display: flex;
     align-items: center;
@@ -172,9 +441,18 @@ const galleryImages = [
     visibility: visible;
   }
 
-  .lightbox-img {
-    max-width: 90vw;
+  .lightbox-media-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 85vw;
     max-height: 90vh;
+  }
+
+  .lightbox-img,
+  .lightbox-video {
+    max-width: 85vw;
+    max-height: 88vh;
     object-fit: contain;
     border-radius: 8px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
@@ -190,12 +468,44 @@ const galleryImages = [
     border: none;
     cursor: pointer;
     line-height: 1;
+    z-index: 2002;
     transition: transform 0.2s ease, color 0.2s ease;
   }
 
   .lightbox-close:hover {
     color: var(--color-primary, #a02a27);
     transform: scale(1.1);
+  }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2002;
+    transition: all 0.2s ease;
+  }
+
+  .lightbox-nav:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.08);
+  }
+
+  .lightbox-prev {
+    left: 24px;
+  }
+
+  .lightbox-next {
+    right: 24px;
   }
 
   @media (max-width: 992px) {
@@ -219,6 +529,19 @@ const galleryImages = [
 
     .masonry-grid {
       column-count: 1;
+    }
+
+    .lightbox-nav {
+      width: 38px;
+      height: 38px;
+    }
+
+    .lightbox-prev {
+      left: 10px;
+    }
+
+    .lightbox-next {
+      right: 10px;
     }
   }
 </style>

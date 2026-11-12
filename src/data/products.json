@@ -1,5 +1,78 @@
 [
   {
+    "id": "bachas",
+    "name": "Bachas en piedra natural",
+    "description": "Bachas artesanales talladas en piedra natural, piezas únicas para baños y espacios de diseño.",
+    "items": [
+      {
+        "id": "bacha-piedra-natural-1",
+        "name": "Bacha en piedra natural",
+        "image": "/images/productos/bacha-piedra-natural-1.webp",
+        "thumb": "/images/productos/bacha-piedra-natural-1-thumb.webp"
+      },
+      {
+        "id": "bacha-piedra-natural-2",
+        "name": "Bacha en piedra natural",
+        "image": "/images/productos/bacha-piedra-natural-2.webp",
+        "thumb": "/images/productos/bacha-piedra-natural-2-thumb.webp"
+      },
+      {
+        "id": "bacha-piedra-natural-3",
+        "name": "Bacha en piedra natural",
+        "image": "/images/productos/bacha-piedra-natural-3.webp",
+        "thumb": "/images/productos/bacha-piedra-natural-3-thumb.webp"
+      },
+      {
+        "id": "bacha-piedra-natural-4",
+        "name": "Bacha en piedra natural",
+        "image": "/images/productos/bacha-piedra-natural-4.webp",
+        "thumb": "/images/productos/bacha-piedra-natural-4-thumb.webp"
+      },
+      {
+        "id": "bacha-piedra-natural-5",
+        "name": "Bacha en piedra natural",
+        "image": "/images/productos/bacha-piedra-natural-5.webp",
+        "thumb": "/images/productos/bacha-piedra-natural-5-thumb.webp"
+      },
+      {
+        "id": "bacha-piedra-natural-6",
+        "name": "Bacha en piedra natural",
+        "image": "/images/productos/bacha-piedra-natural-6.webp",
+        "thumb": "/images/productos/bacha-piedra-natural-6-thumb.webp"
+      },
+      {
+        "id": "bacha-piedra-natural-7",
+        "name": "Bacha en piedra natural",
+        "image": "/images/productos/bacha-piedra-natural-7.webp",
+        "thumb": "/images/productos/bacha-piedra-natural-7-thumb.webp"
+      },
+      {
+        "id": "bacha-piedra-natural-8",
+        "name": "Bacha en piedra natural",
+        "image": "/images/productos/bacha-piedra-natural-8.webp",
+        "thumb": "/images/productos/bacha-piedra-natural-8-thumb.webp"
+      },
+      {
+        "id": "bacha-piedra-natural-9",
+        "name": "Bacha en piedra natural",
+        "image": "/images/productos/bacha-piedra-natural-9.webp",
+        "thumb": "/images/productos/bacha-piedra-natural-9-thumb.webp"
+      },
+      {
+        "id": "bacha-piedra-natural-10",
+        "name": "Bacha en piedra natural",
+        "image": "/images/productos/bacha-piedra-natural-10.webp",
+        "thumb": "/images/productos/bacha-piedra-natural-10-thumb.webp"
+      },
+      {
+        "id": "bacha-piedra-natural-11",
+        "name": "Bacha en piedra natural",
+        "image": "/images/productos/bacha-piedra-natural-11.webp",
+        "thumb": "/images/productos/bacha-piedra-natural-11-thumb.webp"
+      }
+    ]
+  },
+  {
     "id": "muretes",
     "name": "Muretes",
     "description": "Revestimientos en bloques y tiras de piedra natural para muros de interior y exterior.",

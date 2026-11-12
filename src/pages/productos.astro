@@ -190,7 +190,7 @@ const pageSchemas = [breadcrumbSchema, itemListSchema];
                         Ampliar
                       </button>
                       <a 
-                        href={`https://wa.me/5491121850895?text=${encodeURIComponent(`Hola Piedras Canning! Quisiera consultar sobre el producto: ${product.name} (${cat.name})`)}`}
+                        href={`https://wa.me/5491121850895?text=${encodeURIComponent(cat.id === 'bachas' ? 'Hola Piedras Canning! Quisiera consultar sobre las Bachas en piedra natural' : `Hola Piedras Canning! Quisiera consultar sobre el producto: ${product.name} (${cat.name})`)}`}
                         target="_blank" 
                         rel="noopener noreferrer" 
                         class="overlay-consult-link"
@@ -397,14 +397,17 @@ const pageSchemas = [breadcrumbSchema, itemListSchema];
     if (lightboxImg && lightboxCap && lightboxWaLink) {
       lightboxImg.src = item.fullsrc;
       lightboxCap.textContent = item.title;
-      const msg = `Hola Piedras Canning! Quisiera consultar sobre el producto: ${item.title}${item.catname ? ` (${item.catname})` : ''}`;
+      const isBacha = item.catname.toLowerCase().includes('bachas') || item.title.toLowerCase().includes('bacha');
+      const msg = isBacha
+        ? 'Hola Piedras Canning! Quisiera consultar sobre las Bachas en piedra natural'
+        : `Hola Piedras Canning! Quisiera consultar sobre el producto: ${item.title}${item.catname ? ` (${item.catname})` : ''}`;
       lightboxWaLink.href = `https://wa.me/5491121850895?text=${encodeURIComponent(msg)}`;
     }
   }
 
   function openLightbox(fullsrc: string, title: string, catname: string) {
     updateGalleryItems();
-    const foundIdx = activeGallery.findIndex(i => i.fullsrc === fullsrc || i.title === title);
+    const foundIdx = activeGallery.findIndex(i => i.fullsrc === fullsrc || (i.fullsrc.endsWith(fullsrc) && fullsrc !== '') || i.title === title);
     currentIndex = foundIdx !== -1 ? foundIdx : 0;
 
     showLightboxIndex(currentIndex);
